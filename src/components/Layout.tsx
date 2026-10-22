@@ -1,15 +1,10 @@
+import { useContext } from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
-import { useAuth } from '../state/auth'
+import { AuthContext } from '../state/AuthContext'
 
-const links = [
-  { to: '/', label: 'Home' },
-  { to: '/posts', label: 'Posts' },
-  { to: '/favorites', label: 'Favorites' },
-  { to: '/contact', label: 'Contact' },
-]
-
+// The layout route: header and footer stay, <Outlet /> is replaced by the current page.
 export function Layout() {
-  const { signedIn, signOut } = useAuth()
+  const { signedIn, signOut } = useContext(AuthContext)
 
   return (
     <div className="shell">
@@ -18,11 +13,20 @@ export function Layout() {
           Demarch Journal
         </Link>
         <nav aria-label="Main">
-          {links.map((link) => (
-            <NavLink key={link.to} to={link.to} end>
-              {link.label}
-            </NavLink>
-          ))}
+          {/* NavLink adds the class "active" to the link of the current page.
+              "end" means: active only on exactly this URL. */}
+          <NavLink to="/" end>
+            Home
+          </NavLink>
+          <NavLink to="/posts" end>
+            Posts
+          </NavLink>
+          <NavLink to="/favorites" end>
+            Favorites
+          </NavLink>
+          <NavLink to="/contact" end>
+            Contact
+          </NavLink>
           {signedIn ? (
             <button type="button" className="link-button" onClick={signOut}>
               Sign out

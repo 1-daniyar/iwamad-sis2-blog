@@ -1,15 +1,15 @@
-import { Navigate, Outlet, useLocation } from 'react-router'
-import { useAuth } from '../state/auth'
+import { useContext } from 'react'
+import { Navigate, Outlet } from 'react-router'
+import { AuthContext } from '../state/AuthContext'
 
-// A layout route that checks the reader before it renders its <Outlet />.
-// Signed out -> <Navigate> sends the reader to the sign-in page and
-// remembers where they wanted to go.
+// A layout route that checks the reader BEFORE it shows its pages.
+// Signed in  -> <Outlet /> shows the protected page.
+// Signed out -> <Navigate> sends the reader to the sign-in page.
 export function ProtectedRoute() {
-  const { signedIn } = useAuth()
-  const location = useLocation()
+  const { signedIn } = useContext(AuthContext)
 
   if (!signedIn) {
-    return <Navigate to="/signin" replace state={{ from: location.pathname }} />
+    return <Navigate to="/signin" replace />
   }
   return <Outlet />
 }

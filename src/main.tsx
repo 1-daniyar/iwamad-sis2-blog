@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import App from './App.tsx'
 import './index.css'
-import { AuthProvider } from './state/AuthProvider.tsx'
-import { LikesProvider } from './state/LikesProvider.tsx'
+import { AuthProvider } from './state/AuthContext.tsx'
+import { LikesProvider } from './state/LikesContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

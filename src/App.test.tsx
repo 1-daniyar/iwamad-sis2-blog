@@ -4,8 +4,8 @@ import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import App from './App'
 import { posts } from './data/posts'
-import { AuthProvider } from './state/AuthProvider'
-import { LikesProvider } from './state/LikesProvider'
+import { AuthProvider } from './state/AuthContext'
+import { LikesProvider } from './state/LikesContext'
 
 // Render the whole blog starting at any URL.
 function renderAt(path: string) {

@@ -1,18 +1,18 @@
 import { Link, useParams } from 'react-router'
 import { LikeButton } from '../components/LikeButton'
-import { findPost } from '../data/posts'
-import { formatDate } from '../format'
+import { posts } from '../data/posts'
 
 export function PostPage() {
-  // useParams() always gives a string, so convert it before comparing.
-  const { id } = useParams<{ id: string }>()
-  const post = findPost(Number(id))
+  // useParams() gives the :id from the URL as a string, so we convert it to a number.
+  const { id } = useParams()
+  const post = posts.find((p) => p.id === Number(id))
 
+  // No post with this id -> show a clear message instead of a blank page.
   if (post === undefined) {
     return (
       <section className="notice">
         <h1>Post not found</h1>
-        <p>There is no post with the id "{id}". It may have been moved or never existed.</p>
+        <p>There is no post with the id "{id}".</p>
         <Link to="/posts" className="button">
           Back to all posts
         </Link>
@@ -23,7 +23,7 @@ export function PostPage() {
   return (
     <article className="post">
       <p className="meta">
-        <span className="tag">{post.tag}</span> {formatDate(post.date)} · {post.readingMinutes} min read
+        <span className="tag">{post.tag}</span> {post.date} · {post.readingMinutes} min read
       </p>
       <h1>{post.title}</h1>
       {post.body.map((paragraph, index) => (

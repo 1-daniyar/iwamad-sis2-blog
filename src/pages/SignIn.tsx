@@ -1,33 +1,31 @@
-import { Navigate, useLocation, useNavigate } from 'react-router'
-import { useAuth } from '../state/auth'
-
-interface LocationState {
-  from?: string
-}
+import { useContext } from 'react'
+import { useNavigate } from 'react-router'
+import { AuthContext } from '../state/AuthContext'
 
 export function SignIn() {
-  const { signedIn, signIn } = useAuth()
+  const { signedIn, signIn } = useContext(AuthContext)
   const navigate = useNavigate()
-  const location = useLocation()
-
-  // If the reader came here from a protected page, send them back there.
-  const from = (location.state as LocationState | null)?.from ?? '/favorites'
-
-  if (signedIn) {
-    return <Navigate to={from} replace />
-  }
 
   function handleSignIn() {
     signIn()
-    navigate(from, { replace: true })
+    navigate('/favorites') // go to the protected page
+  }
+
+  if (signedIn) {
+    return (
+      <section className="notice">
+        <h1>You are signed in</h1>
+        <p>You can open the Favorites page now.</p>
+      </section>
+    )
   }
 
   return (
     <section className="notice">
       <h1>Sign in</h1>
       <p>
-        The page you asked for is for signed-in readers only. This demo has no passwords: press
-        the button to sign in.
+        The Favorites page is for signed-in readers only. This demo has no passwords: press the
+        button to sign in.
       </p>
       <button type="button" className="button" onClick={handleSignIn}>
         Sign in as reader

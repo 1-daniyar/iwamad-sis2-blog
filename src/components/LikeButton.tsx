@@ -1,14 +1,15 @@
+import { useContext } from 'react'
 import type { Post } from '../data/posts'
-import { useLikes } from '../state/likes'
+import { LikesContext } from '../state/LikesContext'
 
 interface LikeButtonProps {
   post: Post
 }
 
 export function LikeButton({ post }: LikeButtonProps) {
-  const { isLiked, toggleLike } = useLikes()
-  const liked = isLiked(post.id)
-  const count = post.baseLikes + (liked ? 1 : 0)
+  const { likedIds, toggleLike } = useContext(LikesContext)
+  const liked = likedIds.includes(post.id)
+  const count = liked ? post.baseLikes + 1 : post.baseLikes
 
   return (
     <button
@@ -17,7 +18,7 @@ export function LikeButton({ post }: LikeButtonProps) {
       aria-pressed={liked}
       onClick={() => toggleLike(post.id)}
     >
-      <span aria-hidden="true">{liked ? '♥' : '♡'}</span> {liked ? 'Liked' : 'Like'} · {count}
+      {liked ? '♥ Liked' : '♡ Like'} · {count}
     </button>
   )
 }

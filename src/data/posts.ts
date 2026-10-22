@@ -90,7 +90,3 @@ export const posts: Post[] = [
     ],
   },
 ]
-
-export function findPost(id: number): Post | undefined {
-  return posts.find((post) => post.id === id)
-}

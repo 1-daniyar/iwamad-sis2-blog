@@ -3,7 +3,7 @@ import { PostCard } from '../components/PostCard'
 import { posts } from '../data/posts'
 
 export function Home() {
-  const latest = posts.slice(-2).reverse()
+  const firstTwoPosts = posts.slice(0, 2)
 
   return (
     <>
@@ -20,9 +20,9 @@ export function Home() {
       </section>
 
       <section>
-        <h2 className="section-title">Latest posts</h2>
+        <h2 className="section-title">Start here</h2>
         <div className="grid">
-          {latest.map((post) => (
+          {firstTwoPosts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
