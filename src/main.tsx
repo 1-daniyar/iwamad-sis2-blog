@@ -1,10 +1,19 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import { BrowserRouter } from 'react-router'
 import App from './App.tsx'
+import './index.css'
+import { AuthProvider } from './state/AuthProvider.tsx'
+import { LikesProvider } from './state/LikesProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <AuthProvider>
+        <LikesProvider>
+          <App />
+        </LikesProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
